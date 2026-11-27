@@ -396,8 +396,6 @@ Errors always return a structured JSON object containing an \`error\` block with
     slug: 'create-charge',
     description: 'Initialize a charge for Virtual Account, QRIS, or Credit Card payment.',
     type: 'api',
-    method: 'POST',
-    path: '/v1/charges',
     order: 1,
     updatedAt: '2026-11-23T11:20:00Z',
     content: `# Create Payment Charge
@@ -482,8 +480,6 @@ To prevent accidental duplicate payments on network timeouts, always supply a un
     slug: 'get-charge',
     description: 'Retrieve real-time transaction status and payment timestamps.',
     type: 'api',
-    method: 'GET',
-    path: '/v1/charges/:id',
     order: 2,
     updatedAt: '2026-11-23T12:00:00Z',
     content: `# Get Charge Status
@@ -546,8 +542,6 @@ Use this endpoint for polling transactions if webhook delivery fails or for peri
     slug: 'create-refund',
     description: 'Issue a partial or full refund for a settled charge.',
     type: 'api',
-    method: 'POST',
-    path: '/v1/charges/:id/refund',
     order: 3,
     updatedAt: '2026-11-23T14:10:00Z',
     content: `# Create Refund
@@ -719,8 +713,6 @@ NeuroFlow offers optimized models designed for different computational workloads
     slug: 'chat-completions',
     description: 'Generate multi-turn conversational responses with streaming or JSON schema enforcement.',
     type: 'api',
-    method: 'POST',
-    path: '/v1/chat/completions',
     order: 1,
     updatedAt: '2026-11-25T11:00:00Z',
     content: `# Chat Completions
@@ -799,8 +791,6 @@ Creates a model response for the given chat conversation. Supports structured JS
     slug: 'create-embeddings',
     description: 'Generate high-dimensional vector representations for texts.',
     type: 'api',
-    method: 'POST',
-    path: '/v1/embeddings',
     order: 2,
     updatedAt: '2026-11-25T11:45:00Z',
     content: `# Create Embeddings
@@ -866,8 +856,6 @@ Converts text inputs into an array of floating-point numbers suitable for simila
     slug: 'vector-search',
     description: 'Execute k-nearest neighbors (k-NN) queries against pre-indexed vector collections.',
     type: 'api',
-    method: 'POST',
-    path: '/v1/vectors/search',
     order: 3,
     updatedAt: '2026-11-25T12:30:00Z',
     content: `# Vector Search Index
@@ -967,8 +955,6 @@ StoreGrid coordinates inventory counts across 14 fulfilment centers simultaneous
     slug: 'check-sku',
     description: 'Query available, reserved, and defective inventory counts for a given product SKU.',
     type: 'api',
-    method: 'GET',
-    path: '/v2/inventory/:sku',
     order: 1,
     updatedAt: '2026-11-26T19:00:00Z',
     content: `# Check SKU Stock Level
@@ -1034,8 +1020,6 @@ Returns total physical on-hand quantity, active reservations, and net available 
     slug: 'reserve-stock',
     description: 'Atomically reserve stock for an active checkout session.',
     type: 'api',
-    method: 'POST',
-    path: '/v2/inventory/reserve',
     order: 2,
     updatedAt: '2026-11-26T19:30:00Z',
     content: `# Reserve Stock Hold

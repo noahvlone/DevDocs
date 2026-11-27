@@ -30,7 +30,7 @@ Aplikasi website fullstack modern untuk penyedia dan pengelola dokumentasi progr
    - Buat proyek baru atau pilih proyek yang ada.
    - Editor dokumen dua panel (Markdown editor di kiri, *Live Rendered Preview* di kanan).
    - Form builder visual untuk API Endpoint (konfigurasi method, path, headers, query params, request body, dan sample mock response).
-   - Simpan perubahan langsung ke database lokal persisten.
+   - Simpan perubahan langsung ke database PostgreSQL Neon.
    - Tombol *Reset to Factory Data* untuk mengembalikan data sampel bawaan kapan saja.
 
 5. **Pencarian Global (`Ctrl + K`)**:
@@ -59,7 +59,7 @@ Aplikasi berjalan secara fullstack (Frontend Vite di port 3000 dan Backend Expre
 # 1. Masuk ke direktori
 cd Aplikasi-die
 
-# 2. Salin .env.example menjadi .env dan isi GROQ_API_KEY dengan API key Groq milikmu
+# 2. Salin .env.example menjadi .env, lalu isi DATABASE_URL Neon dan GROQ_API_KEY
 
 # 3. Jalankan server (Frontend + Backend bersamaan)
 npm run dev
@@ -69,8 +69,18 @@ Buka peramban di: **`http://localhost:3000`**
 
 Setelah tes API dijalankan, klik **Jelaskan dengan AI** pada Response Console untuk mendapat kesimpulan dan penjelasan status/response. Fitur ini menggunakan model `openai/gpt-oss-120b` melalui Groq. Isi response akan dikirim ke Groq hanya saat tombol tersebut diklik; jangan analisis response yang memuat data sensitif. API key disimpan di `.env` lokal dan tidak boleh dimasukkan ke kode frontend atau repository.
 
+### Deploy ke Neon dan Vercel
+
+1. Buat database di Neon, lalu salin pooled connection string dari tombol **Connect** ke `DATABASE_URL` di `.env` lokal.
+2. Jika ingin membawa data lokal, jalankan `npm run migrate:neon` sebelum aplikasi pertama kali mengakses database. Migrasi hanya berjalan jika database Neon masih kosong. Tanpa migrasi, aplikasi akan mengisi database baru dengan data sampel bawaan.
+3. Import repository ke Vercel. Konfigurasi [vercel.json](./vercel.json) membuild frontend Vite, dan `api/index.ts` meneruskan request API ke Express sebagai satu Vercel Function.
+4. Di **Vercel Project Settings → Environment Variables**, tambahkan `DATABASE_URL` (pooled connection string Neon) dan `GROQ_API_KEY`. Deploy ulang setelah mengatur environment variables.
+
+Jangan commit `.env` atau connection string. Endpoint CMS, reset data, dan proxy tes saat ini belum memiliki autentikasi; aktifkan proteksi akses Vercel sebelum membuka deployment ke publik.
+
 ### Perintah Lainnya:
 - `npm run build`: Kompilasi TypeScript dan build produksi Vite.
+- `npm run migrate:neon`: Migrasikan isi `server/data/db.json` ke database Neon yang masih kosong.
 - `npm run preview`: Pratinjau hasil build produksi.
 - `npm run server`: Menjalankan backend API Express saja (port 3001).
 - `npm run client`: Menjalankan frontend Vite dev server saja (port 3000).
@@ -82,11 +92,16 @@ Setelah tes API dijalankan, klik **Jelaskan dengan AI** pada Response Console un
 ```
 Aplikasi-die/
 ├── server/
-│   ├── index.ts          # Express API server & mock API engine
-│   ├── db.ts             # Atomic JSON file database storage
+│   ├── app.ts            # Express API app, dipakai lokal dan Vercel
+│   ├── index.ts          # Local Express server entry point
+│   ├── db.ts             # Neon PostgreSQL persistence
 │   ├── seed-data.ts      # Data sampel lengkap 3 program dokumentasi
 │   └── data/
-│       └── db.json       # File database persisten lokal
+│       └── db.json       # Sumber migrasi data lokal ke Neon
+├── api/
+│   └── index.ts          # Vercel Function untuk endpoint API
+├── scripts/
+│   └── migrate-json-to-neon.ts # Migrasi database lokal ke Neon
 ├── src/
 │   ├── types/
 │   │   └── doc.ts        # Definisi TypeScript interface
