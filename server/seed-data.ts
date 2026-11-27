@@ -1,4 +1,4 @@
-import { Project, Article } from '../src/types/doc';
+import type { Project, Article } from '../src/types/doc';
 
 export const initialProjects: Project[] = [
   {

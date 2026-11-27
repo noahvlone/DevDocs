@@ -1,5 +1,5 @@
 import YAML from 'yaml';
-import { Project, Section, Article, HttpMethod, ParameterItem, ApiEndpoint } from '../src/types/doc';
+import type { Project, Section, Article, HttpMethod, ParameterItem, ApiEndpoint } from '../src/types/doc';
 
 export interface ParseResult {
   project: Project;

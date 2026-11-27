@@ -1,6 +1,6 @@
 import { neon, type NeonQueryFunction } from '@neondatabase/serverless';
 import type { Project, Article, SearchResultItem } from '../src/types/doc';
-import { initialProjects, initialArticles } from './seed-data';
+import { initialProjects, initialArticles } from './seed-data.js';
 
 type NeonClient = NeonQueryFunction<false, false>;
 

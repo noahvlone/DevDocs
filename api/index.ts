@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import app from '../server/app';
+import app from '../server/app.js';
 
 export default (req: Request, res: Response) => {
   const requestUrl = new URL(req.url || '/', 'http://vercel.local');

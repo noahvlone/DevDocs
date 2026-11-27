@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import multer from 'multer';
-import { db } from './db';
-import { Project, Article } from '../src/types/doc';
-import { parseSpecContent } from './spec-parser';
+import { db } from './db.js';
+import type { Project, Article } from '../src/types/doc';
+import { parseSpecContent } from './spec-parser.js';
 
 const app = express();
 const routeParam = (value: string | string[] | undefined): string =>
